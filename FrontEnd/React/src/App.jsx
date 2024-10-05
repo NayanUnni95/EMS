@@ -1,20 +1,20 @@
-import React from 'react';
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-} from 'react-router-dom';
-import Dashboard from './pages/Dashboard/Dashboard';
-import About from './pages/About/About';
-import Employee from './pages/Emp/Emp';
-import Attendance from './pages/Attendance/Attendance';
-import Salary from './pages/Salary/Salary';
-import Experience from './pages/Experience/Experience';
-import Setting from './pages/Setting/Setting';
-import SignIn from './pages/Auth/SignIn/SignIn';
-import SignUp from './pages/Auth/SignUp/SignUp';
-import NotFound from './pages/NotFound/NotFound';
+} from "react-router-dom";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import About from "./pages/About/About";
+import Employee from "./pages/Emp/Emp";
+import Attendance from "./pages/Attendance/Attendance";
+import Salary from "./pages/Salary/Salary";
+import Experience from "./pages/Experience/Experience";
+import Setting from "./pages/Setting/Setting";
+import SignIn from "./pages/Auth/SignIn/SignIn";
+import SignUp from "./pages/Auth/SignUp/SignUp";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   return (
