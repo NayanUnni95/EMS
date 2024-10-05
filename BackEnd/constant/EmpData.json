@@ -1,0 +1,127 @@
+{
+  "branch": "Computer Science Engineering",
+  "img-root-url": "https://cemuttathara.ac.in/wp-content/uploads/",
+  "email-pattern": "@cemuttathara.ac.in",
+  "faculty-data": [
+    {
+      "id": 1,
+      "name": "Dr.BEJOY ABRAHAM",
+      "type": "Associate Professor",
+      "img": "bejoy%20abraham.jpg",
+      "email": "bejoyabraham",
+      "phone": "7907722983"
+    },
+    {
+      "id": 2,
+      "name": "BINDHU J S",
+      "type": "Assistant Professor & HOD",
+      "img": "bindhujs.jpg",
+      "email": "bindhu",
+      "phone": "9446916880"
+    },
+    {
+      "id": 3,
+      "name": "DR.AFZAL A L",
+      "type": "Assistant Professor",
+      "img": "2021/08/WhatsApp-Image-2021-03-30-at-12.09.10-PM.jpeg",
+      "email": "afzal",
+      "phone": "9447246553"
+    },
+    {
+      "id": 4,
+      "name": "DR.SOUMYA T",
+      "type": "Assistant Professor",
+      "img": "2021/02/Soumya-T.jpg",
+      "email": "soumya",
+      "phone": "9446178245"
+    },
+    {
+      "id": 5,
+      "name": "DR. DEVI DEVAPAL",
+      "type": "Assistant Professor",
+      "img": "Devi.jpg",
+      "email": "devi",
+      "phone": "9446503136"
+    },
+    {
+      "id": 6,
+      "name": "AMEERA BEEGOM J",
+      "type": "Assistant Professor",
+      "img": "2021/02/Ameera-Beegum.jpg",
+      "email": "ameera",
+      "phone": "9605238271"
+    },
+    {
+      "id": 7,
+      "name": "SOWMYA K S",
+      "type": "Assistant Professor",
+      "img": "2023/1/soumya%20001.jpg",
+      "email": "sowmya",
+      "phone": "8547359491"
+    },
+    {
+      "id": 8,
+      "name": "SURYA S R",
+      "type": "Assistant Professor",
+      "img": "2023/1/Surya%20S%20R.JPG",
+      "email": "surya",
+      "phone": "9446556505"
+    },
+    {
+      "id": 9,
+      "name": "SHAMNA A L",
+      "type": "Assistant Professor",
+      "img": "2021/11/Shamna.jpg",
+      "email": "shamna",
+      "phone": "9895480733"
+    },
+    {
+      "id": 10,
+      "name": "DEVI DATH",
+      "type": "Assistant Professor",
+      "img": "2022/01/Devi%20photo.jpg",
+      "email": "devidath",
+      "phone": "9447342666"
+    },
+    {
+      "id": 11,
+      "name": "REKHA V R",
+      "type": "Assistant Professor",
+      "img": "2022/01/rekha-v-r.jpg",
+      "email": "rekhavr",
+      "phone": "9633615920"
+    },
+    {
+      "id": 12,
+      "name": "DEEPTHI P S",
+      "type": "Computer Programmer",
+      "img": "deepthi.jpeg",
+      "email": "deepthi",
+      "phone": "8547820137"
+    },
+    {
+      "id": 13,
+      "name": "VINOD KUMAR T",
+      "type": "Trade Instructor Gr.II",
+      "img": "vinod.jpg",
+      "email": "vinodkumar",
+      "phone": "9895533264"
+    },
+    {
+      "id": 14,
+      "name": "PRASANTH S R",
+      "type": "Trade Instructor Gr.II",
+      "img": "prasanth.jpg",
+      "email": "prasanth",
+      "phone": "9946557176"
+    },
+    {
+      "id": 15,
+      "name": "NIRMALA G",
+      "type": "Trade Instructor Gr.II",
+      "img": "nirmalag.jpg",
+      "email": "nirmala",
+      "phone": "9744673314"
+    }
+  ]
+}
