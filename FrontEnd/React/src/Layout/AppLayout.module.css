@@ -1,0 +1,12 @@
+.container {
+  width: 100dvw;
+  height: 100dvh;
+  display: grid;
+  background-color: gray;
+}
+/* .container > div {
+  margin: 0.5rem;
+} */
+.innerContainer {
+  display: flex;
+}

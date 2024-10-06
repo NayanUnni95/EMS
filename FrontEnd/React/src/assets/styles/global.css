@@ -9,3 +9,10 @@ body {
   box-sizing: inherit;
   font-family: "Josefin Sans", sans-serif;
 }
+:root {
+  --primary-background-color: #2b2b2b;
+  --inner-primary-background-color: #008eb9;
+  --user-selection-section: rgb(29, 29, 29);
+  --user-btn-selector-bg: rgb(80, 80, 80);
+  --user-btn-selector-fg: #bababa;
+}

@@ -1,0 +1,129 @@
+.mainSignInSection {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  background-color: var(--primary-background-color);
+}
+.innerSection {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 0.3rem;
+  background-color: var(--inner-primary-background-color);
+}
+.pageTitle {
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.userTypeSection {
+  width: 80%;
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.3rem;
+  background-color: var(--user-selection-section);
+}
+.adminBtnSection {
+  width: 100%;
+  padding: 0.2rem 0 0.2rem 0.2rem;
+  border-radius: 0.3rem;
+}
+.empBtnSection {
+  width: 100%;
+  padding: 0.2rem 0.2rem 0.2rem 0;
+  border-radius: 0.3rem;
+}
+.userTypeSection button {
+  width: 100%;
+  height: 2rem;
+  border: none;
+  cursor: pointer;
+  background: none;
+  border-radius: 0.3rem;
+  text-transform: capitalize;
+  color: var(--user-btn-selector-fg);
+}
+.inputOuterSection {
+  width: 80%;
+}
+.inputInnerSection {
+  width: 100%;
+  text-transform: capitalize;
+}
+.inputInnerSection form > div {
+  margin: 0.5rem;
+}
+.usernameSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: rgb(255, 0, 157);
+}
+.usernameInnerSection {
+  width: 80%;
+}
+.passwordSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: rgb(255, 0, 0);
+}
+.passwordInnerSection {
+  width: 80%;
+}
+.icon {
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inputInnerSection form input {
+  width: 85%;
+  height: 2.5rem;
+  border: none;
+  outline: none;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  padding-left: 1rem;
+  border-radius: 0.2rem;
+}
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.submitBtn button {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: medium;
+  font-weight: bolder;
+  margin: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: 5rem;
+}
+.bottomSection {
+  margin: 2rem;
+  text-transform: none;
+}
+@media only screen and (max-width: 768px) {
+  .innerSection {
+    width: 70%;
+  }
+}
+@media only screen and (max-width: 425px) {
+  .innerSection {
+    width: 100%;
+    height: 100%;
+  }
+}
