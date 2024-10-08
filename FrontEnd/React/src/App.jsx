@@ -10,6 +10,7 @@ import Home from "./pages/Home/Home";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import About from "./pages/About/About";
 import Employee from "./pages/Emp/Emp";
+import AddEmp from "./pages/AddEmp/AddEmp";
 import Attendance from "./pages/Attendance/Attendance";
 import Salary from "./pages/Salary/Salary";
 import Experience from "./pages/Experience/Experience";
@@ -28,6 +29,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/about" element={<About />} />
             <Route path="/emp" element={<Employee />} />
+            <Route path="/addEmp" element={<AddEmp />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/salary" element={<Salary />} />
             <Route path="/experience" element={<Experience />} />

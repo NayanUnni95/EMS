@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 require("dotenv").config();
 const { connection } = require("./mysqlConnection");
@@ -7,14 +8,23 @@ const { data } = require("./constant/resData");
 
 const port = process.env.port;
 
+const corsOpts = {
+  origin: "*",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"],
+};
+
+app.use(cors(corsOpts));
+
 app.get("/", (req, res) => {
-  res.send("welcome to Employee Management System...");
+  res.status(200).send("welcome to Employee Management System...");
 });
 
 app.get("/employee-details-data", (req, res) => {
   connection.connect((error) => {
     if (error) {
       console.log("Error connecting to database");
+      res.status(400).send();
       return;
     }
     console.log("Connected to database");
