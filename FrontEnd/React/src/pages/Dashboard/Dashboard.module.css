@@ -101,3 +101,21 @@
 .filterIcon {
   margin-right: 0.5rem;
 }
+.dataSection table {
+  width: 100%;
+  padding: 1rem;
+}
+.dataSection table thead {
+  background-color: tomato;
+  text-transform: capitalize;
+}
+.dataSection table thead tr {
+  margin: 1rem;
+}
+.dataSection table tbody {
+  background-color: violet;
+}
+.dataSection table tbody tr {
+  margin: 1rem;
+  text-align: center;
+}

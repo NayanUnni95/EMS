@@ -7,14 +7,14 @@ import { IoFilterOutline } from "react-icons/io5";
 import styles from "./Dashboard.module.css";
 
 function Dashboard() {
-  const [data, setData] = useState("");
+  const [data, setData] = useState();
   const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(Emp_Data, {})
       .then((res) => {
-        setData(res);
-        console.log(res);
+        setData(res.data.details);
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -60,7 +60,7 @@ function Dashboard() {
           ) : (
             <table>
               <thead style={{ backgroundColor: "#c0dbdd63" }}>
-                <tr>
+                <tr className={styles.tableHeadRow}>
                   <th>id</th>
                   <th>img</th>
                   <th>name</th>
@@ -70,14 +70,20 @@ function Dashboard() {
                 </tr>
               </thead>
               <tbody style={{ backgroundColor: "#aeaeae63", padding: "1rem" }}>
-                <tr>
-                  <td>1</td>
-                  <td>nayan avatar</td>
-                  <td>nayan</td>
-                  <td>cse</td>
-                  <td>nayan123@gmail.com</td>
-                  <td>student</td>
-                </tr>
+                {data
+                  ? data.map((index, obj) => {
+                      return (
+                        <tr className={styles.tableBodyRow} key={obj}>
+                          <td>{index.employee_id}</td>
+                          <td>empty</td>
+                          <td>{index.employee_name}</td>
+                          <td>{index.designation}</td>
+                          <td>{index.email}</td>
+                          <td>student</td>
+                        </tr>
+                      );
+                    })
+                  : ""}
               </tbody>
             </table>
           )}

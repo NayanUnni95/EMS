@@ -5,18 +5,18 @@ CREATE TABLE EmployeeDetails (
     email VARCHAR(100),
     phone_number VARCHAR(15),
     designation VARCHAR(50),
-    admin_id INT,
-    FOREIGN KEY (admin_id) REFERENCES Admin(admin_id)
 );
 
 -- Attendance Table
 CREATE TABLE Attendance (
     attendance_id INT PRIMARY KEY,
-    employee_id INT,
+    emp_id INT,
+    adm_id INT,
     days_worked INT,
     total_working_days INT,
     attendance_percentage DECIMAL(5,2),
-    FOREIGN KEY (employee_id) REFERENCES EmployeeDetails(employee_id)
+        FOREIGN KEY (adm_id) REFERENCES Admin(admin_id)
+    FOREIGN KEY (emp_id) REFERENCES EmployeeDetails(employee_id)
 );
 
 -- Salary Table
@@ -31,12 +31,7 @@ CREATE TABLE Salary (
 );
 
 -- Admin Table
-CREATE TABLE Admin (
-    admin_id INT PRIMARY KEY,
-    admin_password VARCHAR(100),
-    employee_id INT,
-    FOREIGN KEY (employee_id) REFERENCES EmployeeDetails(employee_id)
-);
+CREATE TABLE Admin (admin_id INT PRIMARY KEY,admin_password VARCHAR(100),FOREIGN KEY (employee_id) REFERENCES EmployeeDetails(employee_id));
 
 -- EmployeeLogin Table
 CREATE TABLE EmployeeLogin (

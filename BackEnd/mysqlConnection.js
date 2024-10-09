@@ -7,13 +7,13 @@ const connection = mysql.createConnection({
   password: process.env.password,
   database: process.env.database,
 });
-// connection.connect((error) => {
-//   if (error) {
-//     console.log("Error connecting to the database ", error);
-//     return;
-//   }
-//   console.log("Connected to database");
-// });
+connection.connect((error) => {
+  if (error) {
+    console.log("Error connecting to the database ", error);
+    return;
+  }
+  console.log("Connected to database");
+});
 
 // connection.query("SELECT * FROM emp", (error, result, fields) => {
 //   // console.log(error);

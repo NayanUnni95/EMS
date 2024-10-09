@@ -5,6 +5,7 @@ require("dotenv").config();
 const { connection } = require("./mysqlConnection");
 const { querySet } = require("./query");
 const { data } = require("./constant/resData");
+const { JSON } = require("mysql/lib/protocol/constants/types");
 
 const port = process.env.port;
 
@@ -15,44 +16,40 @@ const corsOpts = {
 };
 
 app.use(cors(corsOpts));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.status(200).send("welcome to Employee Management System...");
 });
 
 app.get("/employee-details-data", (req, res) => {
-  connection.connect((error) => {
-    if (error) {
-      console.log("Error connecting to database");
-      res.status(400).send();
-      return;
+  // connection.connect((error) => {
+  //   if (error) {
+  //     console.log("Error connecting to database");
+  //     res.status(400).send();
+  //     return;
+  //   }
+  //   console.log("Connected to database");
+  // });
+
+  connection.query(
+    querySet.read("*", "EmployeeDetails", "", 0),
+    (error, result, fields) => {
+      console.log(result);
+      res.send({
+        url: `${req.baseUrl}${req.originalUrl}`,
+        time: Date.now(),
+        details: result,
+        isAdmin: false,
+      });
     }
-    console.log("Connected to database");
-  });
-  if (req.query.id) {
-    connection.query(
-      querySet.read("*", "EmployeeDetails", `employee_id=${req.query.id}`, 1),
-      (error, result, fields) => {
-        res.send({
-          url: `${req.baseUrl}${req.originalUrl}`,
-          data: result,
-          isAdmin: false,
-        });
-      },
-    );
-  } else {
-    connection.query(
-      querySet.read("*", "EmployeeDetails", "", 0),
-      (error, result, fields) => {
-        res.send({
-          url: `${req.baseUrl}${req.originalUrl}`,
-          time: Date.now(),
-          data: result,
-          isAdmin: false,
-        });
-      },
-    );
-  }
+  );
+});
+
+app.post("/employee-details-data", (res, req) => {
+  console.log(req.body);
+  res.status(200).send();
 });
 
 app.get("/attendance", (req, res) => {
