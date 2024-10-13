@@ -8,18 +8,22 @@ const pool = mysql.createPool({
   password: process.env.password,
   database: process.env.database,
 });
-const queryDB = (query, params = [], callback) => {
-  pool.getConnection((err, connection) => {
-    if (err) {
-      return callback(err, null);
-    }
-    connection.query(query, (err, result) => {
-      connection.release();
+
+const queryDB = (query, params = []) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
       if (err) {
-        return callback(err, null);
+        return reject(err);
       }
-      callback(null, result);
+      connection.query(query, (err, result) => {
+        connection.release();
+        if (err) {
+          return reject(err);
+        }
+        return resolve(result);
+      });
     });
   });
 };
+
 module.exports = { queryDB };

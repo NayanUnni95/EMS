@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const { dashboard, oneEmp, addEmp } = require("./routes/employee");
+const { dashboard, oneEmp, addEmp, allEmp } = require("./routes/employee");
 const { attDetails } = require("./routes/attendance");
 const { expData } = require("./routes/experience");
 const { salaryDetails } = require("./routes/salary");
@@ -20,7 +20,9 @@ app.use(cors(corsOpts));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/employee-details", dashboard);
+app.get("/", (req, res) => res.status(200).send("EMS..."));
+app.get("/employees", dashboard);
+app.get("/employee-all-details/:empId", allEmp);
 app.get("/employee-details/:empId", oneEmp);
 app.post("/add-employee", addEmp);
 app.get("/attendance/:empId", attDetails);
