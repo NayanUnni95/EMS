@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { instance as axios } from "../../axios/configuration";
 import { useNavigate } from "react-router-dom";
-import { Emp_Data } from "../../constant/constant";
+import { Employees_Base_Data } from "../../constant/constant";
 import { CiSearch } from "react-icons/ci";
 import { IoFilterOutline } from "react-icons/io5";
 import styles from "./Dashboard.module.css";
@@ -11,7 +11,7 @@ function Dashboard() {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(Emp_Data, {})
+      .get(Employees_Base_Data, {})
       .then((res) => {
         setData(res.data.details);
         console.log(res.data);

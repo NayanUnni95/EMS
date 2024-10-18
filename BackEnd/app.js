@@ -6,7 +6,7 @@ const { attDetails } = require("./routes/attendance");
 const { expData } = require("./routes/experience");
 const { salaryDetails } = require("./routes/salary");
 const { adminValidate } = require("./routes/adminLogin");
-const { empValidate } = require("./routes/empLogin");
+const { empLogin, empSignup } = require("./routes/empAuth");
 require("dotenv").config();
 
 const port = process.env.port;
@@ -28,8 +28,9 @@ app.post("/add-employee", addEmp);
 app.get("/attendance/:empId", attDetails);
 app.get("/salary/:empId", salaryDetails);
 app.get("/experience/:empId", expData);
-app.get("/admin/login", adminValidate);
-app.get("/emp/login", empValidate);
+app.post("/admin/login", adminValidate);
+app.post("/emp/login", empLogin);
+app.post("/emp/signup", empSignup);
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}/`);

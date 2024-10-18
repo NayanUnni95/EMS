@@ -1,21 +1,35 @@
 const { queryDB } = require("../mysqlConnection");
+const {
+  updateTokenData,
+  adminTokenDataCache,
+} = require("../constant/manageToken");
 
 const adminValidate = (req, res) => {
-  const { uname = "nayan", pass = "nayan@123" } = req.body;
-  const query = `SELECT * FROM Admin`;
+  const { username, password } = req.body.userCredential;
+  const query = `SELECT admin_id, admin_name FROM Admin WHERE admin_username="${username}" AND admin_password="${password}";`;
 
   queryDB(query, [])
     .then((result) => {
-      res.status(200).send({
-        url: `${req.baseUrl}${req.originalUrl}`,
-        time: Date.now(),
+      if (result.length != 0) {
+        const token = updateTokenData(result[0].admin_id, username, password);
+        return res.send({
+          endpoint: `${req.baseUrl}${req.originalUrl}`,
+          details: result,
+          token,
+          status: 200,
+          time: Date.now(),
+          isAdmin: true,
+          isPossibleToLogin: true,
+        });
+      }
+      res.send({
+        endpoint: `${req.baseUrl}${req.originalUrl}`,
         details: result,
-        query,
-        credentials: {
-          uname,
-          pass,
-        },
+        token: null,
+        status: 403,
+        time: Date.now(),
         isAdmin: false,
+        isPossibleToLogin: false,
       });
     })
     .catch((error) => {

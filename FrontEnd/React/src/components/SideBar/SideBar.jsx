@@ -55,7 +55,7 @@ function SideBar() {
             </Link>
           </li>
           <li>
-            <Link to="/auth/signIn">
+            <Link to="/auth/login">
               <AiOutlineLogin size={25} />
               <span>login</span>
               {/* <MdAdminPanelSettings />

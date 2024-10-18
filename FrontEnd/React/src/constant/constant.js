@@ -1,12 +1,13 @@
-const Base_URL = "http://localhost:3000/";
+const Base_URL = "http://localhost:3000";
 const Employees_Base_Data = "/employees";
 const Emp_All_Data = "/employee-all-details";
 const Emp_Details = "/employee-details";
 const Attendance = "/attendance";
 const Salary = "/salary";
 const Experience = "/experience";
-const Admin = "/admin/login";
-const Employee = "/emp/login";
+const Admin_Login = "/admin/login";
+const Employee_Login = "/emp/login";
+const Employee_SignUp = "/emp/signup";
 
 export {
   Base_URL,
@@ -16,6 +17,7 @@ export {
   Attendance,
   Salary,
   Experience,
-  Admin,
-  Employee,
+  Admin_Login,
+  Employee_Login,
+  Employee_SignUp,
 };

@@ -11,6 +11,8 @@ CREATE TABLE EmployeeDetails (
 CREATE TABLE Admin (
     admin_id INT PRIMARY KEY,
     employee_id INT,
+    admin_name VARCHAR(100),
+    admin_username VARCHAR(100),
     admin_password VARCHAR(100),
     FOREIGN KEY (employee_id) REFERENCES EmployeeDetails(employee_id) ON DELETE CASCADE
 );
@@ -18,7 +20,8 @@ CREATE TABLE Admin (
 -- EmployeeLogin Table
 CREATE TABLE EmployeeLogin (
     employee_id INT PRIMARY KEY,
-    login_password VARCHAR(100),
+    employee_username VARCHAR(100),
+    employee_password VARCHAR(100),
     FOREIGN KEY (employee_id) REFERENCES EmployeeDetails(employee_id) ON DELETE CASCADE
 );
 
@@ -65,17 +68,16 @@ INSERT INTO EmployeeDetails (employee_id, employee_name, email, phone_number, de
 (5, 'Evan Moore', 'evan.moore@example.com', '333-333-3333', 'Data Analyst');
 
 -- Admin Table
-INSERT INTO Admin (admin_id, employee_id, admin_password) VALUES
-(1, 2, 'adminPass123'),
-(2, 4, 'hrAdminPass456');
+INSERT INTO Admin (admin_id, employee_id, admin_name, admin_username, admin_password) VALUES
+(1, 1, 'mainAdmin' 'admin1', 'adminPass123');
 
 --  EmployeeLogin Table
-INSERT INTO EmployeeLogin (employee_id, login_password) VALUES
-(1, 'alicePass'),
-(2, 'bobPass'),
-(3, 'charliePass'),
-(4, 'dianaPass'),
-(5, 'evanPass');
+INSERT INTO EmployeeLogin (employee_id, employee_username, login_password) VALUES
+(1, 'alicePass', 'alicePass@123'),
+(2, 'bobPass', 'bobPass@123'),
+(3, 'charliePass', 'charliePass@123'),
+(4, 'dianaPass', 'dianaPass@123'),
+(5, 'evanPass', 'evanPass@123');
 
 -- Attendance Table
 INSERT INTO Attendance (attendance_id, emp_id, days_worked, total_working_days, attendance_percentage) VALUES
