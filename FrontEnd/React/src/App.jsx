@@ -7,11 +7,15 @@ import {
 } from "react-router-dom";
 import AppLayout from "./Layout/AppLayout";
 import Home from "./pages/Home/Home";
-import Dashboard from "./pages/Dashboard/Dashboard2";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import SignIn from "./pages/Auth/Login/Login";
 import SignUp from "./pages/Auth/SignUp/SignUp";
 import NotFound from "./pages/NotFound/NotFound";
 import ContactUs from "./pages/ContactUs/ContactUs";
+import EmpDashboard from "./pages/Dashboard/EmpDashboard";
+import AddEmployee from "./components/AddEmployee/AddEmployee";
+import RemoveEmployee from "./components/RemoveEmployee/RemoveEmployee";
+import EditEmployee from "./components/EditEmployee/EditEmployee";
 
 function App() {
   return (
@@ -20,7 +24,12 @@ function App() {
         <Routes>
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/admin/dashboard" element={<Dashboard />}>
+              <Route path="add" element={<AddEmployee />} />
+              <Route path="remove" element={<RemoveEmployee />} />
+              <Route path="edit" element={<EditEmployee />} />
+            </Route>
+            <Route path="/emp/dashboard" element={<EmpDashboard />} />
             <Route path="/contact" element={<ContactUs />} />
           </Route>
           <Route path="/auth/login" element={<SignIn />} />

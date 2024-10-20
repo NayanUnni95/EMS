@@ -13,7 +13,7 @@ function ContactUs() {
       }}
     >
       <div
-        classNameName="p-5 flex-1 h-[85%] bg-opacity-50 bg-slate-300 rounded-3xl"
+        className="p-5 flex-1 h-[85%] bg-opacity-50 bg-slate-300 rounded-3xl"
         id="content"
       >
         <h1 className="text-2xl font-bold">Contact Us</h1>
