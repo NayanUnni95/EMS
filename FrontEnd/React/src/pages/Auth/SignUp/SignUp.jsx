@@ -11,18 +11,26 @@ import styles from "../Login/Login.module.css";
 function SignUp() {
   // const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, seIsLoading] = useState(false);
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNo, setPhoneNo] = useState();
-  const [designation, setDesignation] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [phoneNo, setPhoneNo] = useState();
+  // const [designation, setDesignation] = useState("");
 
-  const success = () =>
-    toast.success("Login Success!", { position: "bottom-center" });
-  const fail = () =>
-    toast.error("Invalid Input", { position: "bottom-center" });
+  const toastObj = {
+    position: "bottom-center",
+    autoClose: 2000,
+    closeOnClick: true,
+    pauseOnHover: false,
+    hideProgressBar: true,
+    draggable: false,
+  };
+  const success = (msg) => toast.success(msg, toastObj);
+  const fail = (msg) => toast.error(msg, toastObj);
+  const info = (msg) => toast.info(msg, toastObj);
+  const warning = (msg) => toast.warn(msg, toastObj);
 
   const login = async (
     name,
@@ -31,27 +39,34 @@ function SignUp() {
     confirmPassword,
     email,
     phoneNo,
-    designation,
+    designation
   ) => {
-    if (password !== confirmPassword)
-      return alert("Two passwords are different :(");
+    // if (password !== confirmPassword) {
+    //   console.log(password);
+    //   console.log(confirmPassword);
+    //   return warning("Two passwords are different :( ");
+    // }
     const payload = {
       method: "POST",
       url: Employee_SignUp,
       userCredential: {
-        name,
+        // name,
         username,
         password,
-        email,
-        phoneNo,
-        designation,
+        // email,
+        // phoneNo,
+        // designation,
       },
       headers: {
         "Content-Type": "application/json",
       },
     };
+    console.log(payload);
+
     const response = await axios.post(Employee_SignUp, payload);
-    return response;
+    console.log(response);
+
+    // return response;
   };
 
   return (
@@ -124,7 +139,22 @@ function SignUp() {
                   />
                 </div>
               </div>
-              <div className={styles.passwordSection}>
+              <div className={styles.usernameSection}>
+                <div className={styles.icon}>
+                  <FaUser size={20} />
+                </div>
+                <div className={styles.usernameInnerSection}>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    name="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              {/* <div className={styles.passwordSection}>
                 <div className={styles.icon}>
                   <FaUser size={20} />
                 </div>
@@ -138,22 +168,7 @@ function SignUp() {
                     required
                   />
                 </div>
-              </div>
-              <div className={styles.usernameSection}>
-                <div className={styles.icon}>
-                  <FaUser size={20} />
-                </div>
-                <div className={styles.usernameInnerSection}>
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    name="pass"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
+              </div> */}
               {/* <div className={styles.passwordSection}>
                 <div className={styles.icon}>
                   <IoMdLock size={20} />
@@ -204,19 +219,15 @@ function SignUp() {
                   disabled={isLoading}
                   onClick={(e) => {
                     e.preventDefault();
-                    // console.log(
-                    //   login(
-                    //     name,
-                    //     username,
-                    //     password,
-                    //     confirmPassword,
-                    //     email,
-                    //     phoneNo,
-                    //     designation
-                    //   )
-                    // );
-                    success();
-                    fail();
+                    login(
+                      // name,
+                      username,
+                      password
+                      // confirmPassword
+                      // email,
+                      // phoneNo,
+                      // designation
+                    );
                   }}
                   style={{
                     display: "flex",

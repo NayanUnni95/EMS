@@ -5,9 +5,9 @@ const Emp_Details = "/employee-details";
 const Attendance = "/attendance";
 const Salary = "/salary";
 const Experience = "/experience";
-const Admin_Login = "/admin/login";
-const Employee_Login = "/emp/login";
-const Employee_SignUp = "/emp/signup";
+const Admin_Login = "/api/admin/login";
+const Employee_Login = "/api/emp/login";
+const Employee_SignUp = "/api/emp/signup";
 
 export {
   Base_URL,

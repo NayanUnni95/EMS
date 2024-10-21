@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { instance as axios } from "../../../axios/configuration";
 import { ThreeDots } from "react-loader-spinner";
 import { Admin_Login, Employee_Login } from "../../../constant/constant";
@@ -14,11 +15,20 @@ function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const success = () =>
-    toast.success("Login Success!", { position: "bottom-center" });
-  const fail = () =>
-    toast.error("Invalid Input", { position: "bottom-center" });
+  const toastObj = {
+    position: "bottom-center",
+    autoClose: 2000,
+    closeOnClick: true,
+    pauseOnHover: false,
+    hideProgressBar: true,
+    draggable: false,
+  };
+  const success = (msg) => toast.success(msg, toastObj);
+  const fail = (msg) => toast.error(msg, toastObj);
+  const info = (msg) => toast.info(msg, toastObj);
+  const warning = (msg) => toast.warn(msg, toastObj);
 
   const login = async (username, password) => {
     const url = `${isAdmin ? Admin_Login : Employee_Login}`;
@@ -34,9 +44,23 @@ function SignIn() {
         "Content-Type": "application/json",
       },
     };
-
-    const response = await axios.post(url, payload);
-    return response;
+    try {
+      const response = await axios.post(url, payload, {
+        withCredentials: true,
+      });
+      if (response.data.message) {
+        if (response.data.message === "Invalid credentials") {
+          info(response.data.message);
+        } else {
+          warning(response.data.message);
+        }
+      } else {
+        success("Login Success");
+        navigate("/");
+      }
+    } catch (error) {
+      fail("Something went wrong...");
+    }
   };
 
   return (
@@ -134,7 +158,7 @@ function SignIn() {
                   disabled={isLoading}
                   onClick={(e) => {
                     e.preventDefault();
-                    console.log(login(username, password));
+                    login(username, password);
                     // success();
                     // fail();
                   }}

@@ -46,6 +46,13 @@ function EditEmployee() {
             required
             className="border border-black rounded w-full px-2 py-2 my-2"
           />
+          <input
+            type="number"
+            id="editEmployeePhoneNo"
+            placeholder="Phone No"
+            required
+            className="border border-black rounded w-full px-2 py-2 my-2"
+          />
           <select
             id="editEmployeeStatus"
             required

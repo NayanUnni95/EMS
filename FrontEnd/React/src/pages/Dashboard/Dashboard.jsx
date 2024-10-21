@@ -1,12 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { instance as axios } from "../../axios/configuration";
+import { Employees_Base_Data } from "../../constant/constant";
 import { useNavigate, Outlet } from "react-router-dom";
 import EmpDashboard from "./EmpDashboard";
 
 function Dashboard2() {
   const [showEmp, setShowEmp] = useState(false);
+  const [empData, SetEmpData] = useState();
   const navigate = useNavigate();
-  const data = [1, 2, 3, 4, 5];
+  // const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  // const data = [1, 2];
 
+  useEffect(() => {
+    axios
+      .get(Employees_Base_Data)
+      .then((res) => {
+        SetEmpData(res.data.details);
+        console.log(res.data.details);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <div
       className="w-[90%] mx-auto space-y-10 bg-slate-300 bg-opacity-60 rounded-3xl border border-black shadow-2xl py-4 px-3"
@@ -64,16 +79,18 @@ function Dashboard2() {
             <table className="min-w-full bg-white" id="employeeTable">
               <thead>
                 <tr className="border-b border-black">
+                  <th className="py-2 px-4 text-left">Id</th>
                   <th className="py-2 px-4 text-left">Name</th>
                   <th className="py-2 px-4 text-left">Email</th>
-                  <th className="py-2 px-4 text-left">Department</th>
+                  {/* <th className="py-2 px-4 text-left">Department</th> */}
                   <th className="py-2 px-4 text-left">Designation</th>
+                  <th className="py-2 px-4 text-left">Phone</th>
                   <th className="py-2 px-4 text-left">Status</th>
                   <th className="py-2 px-4 text-left">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {data?.map((data, index) => {
+                {empData?.map((data, index) => {
                   return (
                     <tr
                       key={index}
@@ -81,11 +98,18 @@ function Dashboard2() {
                       data-name="John Doe"
                       onClick={() => setShowEmp(!showEmp)}
                     >
-                      <td className="py-2 px-4">John Doe</td>
-                      <td className="py-2 px-4">john@example.com</td>
-                      <td className="py-2 px-4">IT</td>
-                      <td className="py-2 px-4">Developer</td>
-                      <td className="py-2 px-4">Active</td>
+                      <td className="py-2 px-4">{data.Id}</td>
+                      <td className="py-2 px-4">{data.Name}</td>
+                      <td className="py-2 px-4">{data.Email}</td>
+                      <td className="py-2 px-4">{data.Designation}</td>
+                      <td className="py-2 px-4">{data.Phone}</td>
+                      <td className="py-2 px-4">
+                        {data.Status == 1 ? "Active" : "Inactive"}
+                      </td>
+                      {/* <td className="py-2 px-4">{index}</td>
+                      <td className="py-2 px-4">Nayan</td>
+                      <td className="py-2 px-4">nayanunni95@gmail.com</td>
+                      <td className="py-2 px-4">Developer</td> */}
                       <td className="py-2 px-4">
                         <button
                           className="text-blue-600 hover:underline edit-button"

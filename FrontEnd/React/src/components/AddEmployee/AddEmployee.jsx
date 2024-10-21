@@ -17,54 +17,112 @@ function AddEmployee() {
           &times;
         </span>
         <h2 className="text-center font-semibold">Add Employee</h2>
-        <form id="addEmployeeForm">
-          <input
-            type="text"
-            id="employeeName"
-            placeholder="Name"
-            required
-            className="border border-black rounded w-full px-2 py-2 my-2"
-          />
-          <input
-            type="email"
-            id="employeeEmail"
-            placeholder="Email"
-            required
-            className="border border-black rounded w-full px-2 py-2 my-2"
-          />
-          <input
-            type="text"
-            id="employeeDepartment"
-            placeholder="Department"
-            required
-            className="border border-black rounded w-full px-2 py-2 my-2"
-          />
-          <input
-            type="text"
-            id="employeeDesignation"
-            placeholder="Designation"
-            required
-            className="border border-black rounded w-full px-2 py-2 my-2"
-          />
-          <select
-            id="employeeStatus"
-            required
-            className="border border-black rounded w-full px-2 py-2 my-2"
+        <form
+          id="addEmployeeForm"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                display: "flex",
+                // flexWrap: "wrap"
+              }}
+            >
+              <input
+                type="text"
+                id="employeeName"
+                placeholder="Name"
+                required
+                className="border border-black rounded w-full px-2 py-2 my-2"
+              />
+              <input
+                type="email"
+                id="employeeEmail"
+                placeholder="Email"
+                required
+                className="border border-black rounded w-full px-2 py-2 my-2"
+              />
+              <input
+                type="text"
+                id="employeeDepartment"
+                placeholder="Department"
+                required
+                className="border border-black rounded w-full px-2 py-2 my-2"
+              />
+              <input
+                type="text"
+                id="employeeDesignation"
+                placeholder="Designation"
+                required
+                className="border border-black rounded w-full px-2 py-2 my-2"
+              />
+            </div>
+            <div>
+              <input
+                type="number"
+                id="employeePhoneNo"
+                placeholder="PhoneNo"
+                required
+                className="border border-black rounded w-full px-2 py-2 my-2"
+              />
+              <input
+                type="date"
+                id="employeeDOB"
+                placeholder="Date of Birth"
+                required
+                className="border border-black rounded w-full px-2 py-2 my-2"
+              />
+              <select
+                id="employeeGender"
+                required
+                className="border border-black rounded w-full px-2 py-2 my-2"
+              >
+                <option value="Active">Male</option>
+                <option value="Inactive">Female</option>
+                <option value="Inactive">Other</option>
+              </select>
+              <select
+                id="employeeStatus"
+                required
+                className="border border-black rounded w-full px-2 py-2 my-2"
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <select
+                id="employeeQuality"
+                required
+                className="border border-black rounded w-full px-2 py-2 my-2"
+              >
+                <option value="Active">1</option>
+                <option value="Inactive">2</option>
+                <option value="Inactive">3</option>
+                <option value="Inactive">4</option>
+                <option value="Inactive">5</option>
+              </select>
+            </div>
+          </div>
+          <div
+            className="flex justify-center mt-4"
+            style={{
+              width: "100%",
+              // display: "flex",
+              // flexWrap: "wrap"
+            }}
           >
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </select>
-          <div className="flex justify-between mt-4">
             <button
               type="submit"
-              className="bg-green-700 rounded-3xl border border-black shadow-2xl text-white px-4 py-2"
+              className="m-4 bg-green-700 rounded-3xl border border-black shadow-2xl text-white px-4 py-2"
             >
               Add
             </button>
             <button
               id="cancelAddEmployeeButton"
               type="button"
-              className="bg-black rounded-3xl border border-black shadow-2xl text-white px-4 py-2"
+              className="m-4 bg-black rounded-3xl border border-black shadow-2xl text-white px-4 py-2"
               onClick={() => navigate("/admin/dashboard")}
             >
               Cancel
