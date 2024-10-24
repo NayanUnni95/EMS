@@ -3,7 +3,7 @@ import React from "react";
 function Home() {
   return (
     <div
-      className="w-[90%] mx-auto space-y-10 bg-slate-300 bg-opacity-60 rounded-3xl border border-black shadow-2xl py-4 px-3"
+      className="w-[90%] mx-auto space-y-10 bg-slate-300 bg-opacity-60 rounded-2xl border border-black shadow-2xl py-4 px-3"
       style={{
         margin: "0.5rem",
         padding: "1rem",

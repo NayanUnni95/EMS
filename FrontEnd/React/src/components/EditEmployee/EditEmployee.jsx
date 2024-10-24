@@ -1,13 +1,31 @@
 import React from "react";
+import { instance as axios } from "../../axios/configuration";
+import { Base_URL, Edit_emp } from "../../constant/constant";
 import { useNavigate } from "react-router-dom";
 
 function EditEmployee() {
   const navigate = useNavigate();
-
+  const editEmployee = () => {
+    const response = axios
+      .post(
+        `${Base_URL}${Edit_emp}`,
+        {},
+        {
+          withCredentials: true,
+        },
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div
       id="editEmployeeModal"
       className="modal fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
+      style={{ margin: "0" }}
     >
       <div className="modal-content bg-white rounded-3xl shadow-2xl p-6 w-96 mx-auto border border-black">
         <span
@@ -65,6 +83,10 @@ function EditEmployee() {
             <button
               type="submit"
               className="bg-blue-700 rounded-3xl border border-black shadow-2xl text-white px-4 py-2"
+              onClick={(event) => {
+                event.preventDefault();
+                editEmployee();
+              }}
             >
               Update
             </button>

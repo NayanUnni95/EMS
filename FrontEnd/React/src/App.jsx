@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,6 +16,10 @@ import EmpDashboard from "./pages/Dashboard/EmpDashboard";
 import AddEmployee from "./components/AddEmployee/AddEmployee";
 import RemoveEmployee from "./components/RemoveEmployee/RemoveEmployee";
 import EditEmployee from "./components/EditEmployee/EditEmployee";
+import Employee from "./pages/Employee/Employee";
+import Attendance from "./components/Attendance/Attendance";
+import Salary from "./components/Salary/Salary";
+import Experience from "./components/Experience/Experience";
 
 function App() {
   return (
@@ -30,6 +34,14 @@ function App() {
               <Route path="edit" element={<EditEmployee />} />
             </Route>
             <Route path="/emp/dashboard" element={<EmpDashboard />} />
+            <Route path="/user/dashboard/:empId" element={<Employee />}>
+              <Route path="attendance" element={<Attendance />} />
+              <Route path="salary" element={<Salary />} />
+              <Route path="experience" element={<Experience />} />
+            </Route>
+            {/* <Route path="/user/dashboard/:empId" element={<Employee />} />
+            <Route path="/user/dashboard/:empId" element={<Employee />} />
+            <Route path="/user/dashboard/:empId" element={<Employee />} /> */}
             <Route path="/contact" element={<ContactUs />} />
           </Route>
           <Route path="/auth/login" element={<SignIn />} />

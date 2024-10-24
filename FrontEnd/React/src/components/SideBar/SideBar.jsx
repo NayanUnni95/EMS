@@ -1,16 +1,34 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { instance as axios } from "../../axios/configuration";
+import { Logout } from "../../constant/constant";
+import { Link, useNavigate } from "react-router-dom";
+import { DataContext } from "../../context/LoginCache";
 
 function SideBar2() {
-  const [isAdmin, setIsAdmin] = useState(true);
-  const [isLogin, setIsLogin] = useState(false);
+  const { isLogged, setIsLogged, isAdmin, userData, setUserData } =
+    useContext(DataContext);
+  const navigate = useNavigate();
+  const logout = () => {
+    axios
+      .get(Logout)
+      .then((result) => {
+        setIsLogged(false);
+        setUserData({});
+        navigate("/");
+        console.log("successfully logout");
+      })
+      .catch((error) => {
+        console.log("failed");
+      });
+  };
 
   return (
     <div
-      className="w-[20%] h-[96.89%] h-screen space-y-3 py-4 px-3 text-center rounded-3xl border border-black shadow-2xl bg-slate-300 bg-opacity-60"
+      className="w-[20%] space-y-3 py-4 px-3 text-center rounded-2xl border border-black shadow-2xl bg-slate-300 bg-opacity-60"
       style={{
-        margin: "0.5rem",
+        margin: "0.5rem 0 0.5rem 0.5rem",
         padding: "1rem",
+        height: "97.5vh",
       }}
     >
       <div className="logo-container w-full space-x-2 flex justify-center space-x-4 border-4 border-black px-6 py-2 rounded-3xl">
@@ -20,10 +38,10 @@ function SideBar2() {
           className="h-12 w-12 rounded-full transition-transform duration-200 animate-flip logo border border-black"
           id="logo"
         />
-        <p id="techverse"></p>
+        <h1 id="techverse"></h1>
       </div>
       <h1 className="text-2xl border-b-2 border-black font-semibold">
-        {isAdmin ? "Admin" : "Employee"}
+        {isLogged ? (isAdmin ? "Admin" : "Employee") : "EMS"}
       </h1>
       <nav className="mt-6 font-bold">
         <ul>
@@ -32,30 +50,31 @@ function SideBar2() {
               Home
             </li>
           </Link>
-          {isAdmin ? (
-            <Link to="/admin/dashboard">
-              <li className="menu-item py-2 my-1 px-4 hover:bg-slate-500 hover:underline rounded-full">
-                Dashboard
-              </li>
-            </Link>
-          ) : (
-            <Link to="/emp/dashboard">
-              <li className="menu-item py-2 my-1 px-4 hover:bg-slate-500 hover:underline rounded-full">
-                Profile
-              </li>
-            </Link>
-          )}
-          {/* <li className="menu-item py-2 px-4 my-1 hover:bg-slate-500 hover:underline rounded-full">
-              <Link to="/contact">Our team</Link>
-            </li> */}
+          {isLogged &&
+            (isAdmin ? (
+              <Link to="/admin/dashboard">
+                <li className="menu-item py-2 my-1 px-4 hover:bg-slate-500 hover:underline rounded-full">
+                  Dashboard
+                </li>
+              </Link>
+            ) : (
+              <Link to="/emp/dashboard">
+                <li className="menu-item py-2 my-1 px-4 hover:bg-slate-500 hover:underline rounded-full">
+                  Profile
+                </li>
+              </Link>
+            ))}
           <Link to="/contact">
             <li className="menu-item py-2 px-4 my-1 hover:bg-slate-500 hover:underline rounded-full">
               Contact Us
             </li>
           </Link>
-          {isLogin ? (
+          {isLogged ? (
             <Link>
-              <li className="menu-item py-2 px-4 my-1 hover:bg-slate-500 hover:underline rounded-full">
+              <li
+                className="menu-item py-2 px-4 my-1 hover:bg-slate-500 hover:underline rounded-full"
+                onClick={() => logout()}
+              >
                 Logout
               </li>
             </Link>

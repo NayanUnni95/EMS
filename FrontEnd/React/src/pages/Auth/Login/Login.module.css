@@ -66,7 +66,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
-  background-color: rgb(255, 0, 157);
+  background-color: #7e7575;
 }
 .usernameInnerSection {
   width: 80%;
@@ -76,7 +76,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
-  background-color: rgb(255, 0, 0);
+  background-color: #7e7575;
 }
 .passwordInnerSection {
   width: 80%;

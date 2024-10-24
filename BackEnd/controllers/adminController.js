@@ -3,7 +3,7 @@ const { createToken } = require("../utils/createToken");
 
 const loginAdmin = (req, res) => {
   const { username, password } = req.body.userCredential;
-  const loginTableQuery = `SELECT * FROM Admin WHERE admin_username="${username}" AND admin_password="${password}";`;
+  const loginTableQuery = `SELECT * FROM AdminLogin WHERE admin_username="${username}" AND admin_password="${password}";`;
 
   if (!username || !password)
     return res.status(200).send({ message: "Please fill all fields" });
@@ -11,10 +11,7 @@ const loginAdmin = (req, res) => {
   queryDB(loginTableQuery, []).then((result) => {
     if (result.length > 0) {
       createToken(res, result[0].employee_id);
-      return res.status(200).json({
-        id: result[0].employee_id,
-        userName: result[0].employee_username,
-      });
+      return res.status(200).send(result[0]);
     }
     return res.status(200).send({ message: "Invalid credentials" });
   });

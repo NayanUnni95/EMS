@@ -5,15 +5,18 @@ import { useNavigate, Outlet } from "react-router-dom";
 import EmpDashboard from "./EmpDashboard";
 
 function Dashboard2() {
-  const [showEmp, setShowEmp] = useState(false);
   const [empData, SetEmpData] = useState();
   const navigate = useNavigate();
-  // const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  // const data = [1, 2];
 
   useEffect(() => {
     axios
-      .get(Employees_Base_Data)
+      .post(
+        Employees_Base_Data,
+        {},
+        {
+          withCredentials: true,
+        },
+      )
       .then((res) => {
         SetEmpData(res.data.details);
         console.log(res.data.details);
@@ -24,7 +27,7 @@ function Dashboard2() {
   }, []);
   return (
     <div
-      className="w-[90%] mx-auto space-y-10 bg-slate-300 bg-opacity-60 rounded-3xl border border-black shadow-2xl py-4 px-3"
+      className="w-[90%] mx-auto space-y-10 bg-slate-300 bg-opacity-60 rounded-2xl border border-black shadow-2xl py-4 px-3"
       style={{ margin: "0.5rem" }}
     >
       <div>
@@ -82,7 +85,6 @@ function Dashboard2() {
                   <th className="py-2 px-4 text-left">Id</th>
                   <th className="py-2 px-4 text-left">Name</th>
                   <th className="py-2 px-4 text-left">Email</th>
-                  {/* <th className="py-2 px-4 text-left">Department</th> */}
                   <th className="py-2 px-4 text-left">Designation</th>
                   <th className="py-2 px-4 text-left">Phone</th>
                   <th className="py-2 px-4 text-left">Status</th>
@@ -96,20 +98,18 @@ function Dashboard2() {
                       key={index}
                       className="border-b border-black hover:bg-slate-300"
                       data-name="John Doe"
-                      onClick={() => setShowEmp(!showEmp)}
+                      onClick={() => {
+                        navigate(`/user/dashboard/${data.employee_id}`);
+                      }}
                     >
-                      <td className="py-2 px-4">{data.Id}</td>
-                      <td className="py-2 px-4">{data.Name}</td>
-                      <td className="py-2 px-4">{data.Email}</td>
-                      <td className="py-2 px-4">{data.Designation}</td>
-                      <td className="py-2 px-4">{data.Phone}</td>
+                      <td className="py-2 px-4">{data.employee_id}</td>
+                      <td className="py-2 px-4">{data.employee_name}</td>
+                      <td className="py-2 px-4">{data.email}</td>
+                      <td className="py-2 px-4">{data.designation}</td>
+                      <td className="py-2 px-4">{data.phone_number}</td>
                       <td className="py-2 px-4">
                         {data.Status == 1 ? "Active" : "Inactive"}
                       </td>
-                      {/* <td className="py-2 px-4">{index}</td>
-                      <td className="py-2 px-4">Nayan</td>
-                      <td className="py-2 px-4">nayanunni95@gmail.com</td>
-                      <td className="py-2 px-4">Developer</td> */}
                       <td className="py-2 px-4">
                         <button
                           className="text-blue-600 hover:underline edit-button"
@@ -127,7 +127,6 @@ function Dashboard2() {
         </div>
       </div>
       <Outlet />
-      {showEmp && <EmpDashboard />}
     </div>
   );
 }

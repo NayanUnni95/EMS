@@ -1,87 +1,240 @@
 const { queryDB } = require("../mysqlConnection");
-const { createToken } = require("../utils/createToken");
+// const { adminProtect, empProtect } = require("../middleware/authMiddleware");
 
-const createUser = (req, res) => {
-  const { username, password } = req.body.userCredential;
-  const loginTableQuery = `SELECT * FROM EmployeeLogin WHERE employee_username="${username}" AND employee_password="${password}";`;
-  const registerQuery = `INSERT INTO EmployeeLogin (employee_id, employee_username, employee_password) VALUES `;
-  const selectTable = `SELECT employee_id, employee_username FROM EmployeeLogin`;
-  console.log(req.body.userCredential);
-  // console.log(password);
+const query = `SELECT * FROM EmployeeDetails`;
 
-  if (!username || !password)
-    return res.status(200).send({ message: "Please fill all fields" });
-  queryDB(loginTableQuery, [])
+const empBaseDetails = (req, res) => {
+  queryDB(query, [])
     .then((result) => {
-      if (result.length > 0) return res.status(304).send("User already exist");
-      queryDB(selectTable, []).then((result, error) => {
-        const index = result.at(-1).employee_id + 1;
-        queryDB(
-          `${registerQuery} (${index}, '${username}', '${password}');`,
-          []
-        )
-          .then((result, error) => {
-            queryDB(`${selectTable} WHERE employee_id=${index};`, []).then(
-              (result, error) => {
-                createToken(res, result[0]);
-                return res.status(200).json({
-                  id: result[0].employee_id,
-                  userName: result[0].employee_username,
-                });
-              }
-            );
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      res.status(200).send({
+        url: `${req.baseUrl}${req.originalUrl}`,
+        time: Date.now(),
+        details: result,
+        isAdmin: true,
       });
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send({ error: "Database query failed" });
+      return res.status(500).send({ error: "Database query failed" });
     });
 };
-const loginUser = (req, res) => {
-  const { username, password } = req.body.userCredential;
-  const loginTableQuery = `SELECT * FROM EmployeeLogin WHERE employee_username="${username}" AND employee_password="${password}";`;
-  //   console.log(req.cookies);
+const addEmp = (req, res) => {
+  const {
+    name,
+    userName,
+    pass,
+    email,
+    department,
+    designation,
+    phoneNo,
+    description,
+    dob,
+    gender,
+    status,
+    quality,
+  } = req.body;
+  // console.log(req.body);
 
-  if (!username || !password)
-    return res.status(200).send({ message: "Please fill all fields" });
+  const selectQuery = `SELECT details_id, employee_id FROM EmployeeDetails`;
+  const insertQuery = `INSERT INTO EmployeeDetails (details_id, employee_id, admin_id, employee_name, email, phone_number, department, designation, DOB, Status, Gender, Description, Quality)
+VALUES`;
+  const registerQuery = `INSERT INTO EmployeeLogin (employee_id, admin_id, employee_username, employee_password)
+VALUES `;
+  queryDB(selectQuery, [])
+    .then((result) => {
+      const employee_id = result.at(-1).employee_id + 1;
+      const details_id = result.at(-1).details_id + 1;
+      queryDB(
+        `${registerQuery} (${employee_id}, NULL, '${userName}', '${pass}');`,
+        [],
+      )
+        .then((result) => {
+          queryDB(
+            `${insertQuery} (${details_id}, ${employee_id}, NULL, '${name}', '${email}', '${phoneNo}', '${department}', '${designation}', '${dob}', ${status}, '${gender}', '${description}', ${quality});`,
+            [],
+          )
+            .then((result) => {
+              console.log("Added Success");
+              res.status(200).send("Added Success");
+            })
+            .catch((error) => {
+              console.log(error);
+              return res.status(500).send({ error: "Database query failed" });
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+          return res.status(500).send({ error: "Database query failed" });
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).send({ error: "Database query failed" });
+    });
 
-  queryDB(loginTableQuery, []).then((result) => {
-    if (result.length > 0) {
-      createToken(res, result[0].employee_id);
-      return res.status(200).json({
-        id: result[0].employee_id,
-        userName: result[0].employee_username,
-      });
-    }
-    return res.status(200).send({ message: "Invalid credentials" });
-  });
+  // res.status(200).send("Added Success");
+};
+const removeEmp = (req, res) => {
+  const { empId } = req.body;
+  console.log(empId);
+  const query = `DELETE FROM EmployeeLogin WHERE employee_id=${empId};`;
+  queryDB(query, [])
+    .then((result) => {
+      return res.status(200).send("Removed Success");
+    })
+    .catch((error) => {
+      console.error("Error fetching employee data:", error);
+      return res.status(500).send("Error fetching employee data");
+    });
+};
+const editEmp = (req, res) => {
+  console.log(req.body);
+  res.status(200).send("Edited Success");
+};
+const empAllDetails = async (req, res) => {
+  const { empId } = req.body;
+
+  try {
+    const results = await Promise.all([
+      {
+        basicDetails: await queryDB(
+          `SELECT * FROM EmployeeDetails WHERE employee_id = ${empId};`,
+          [],
+        ),
+      },
+      {
+        attendance: await queryDB(
+          `SELECT * FROM Attendance WHERE emp_id = ${empId};`,
+          [],
+        ),
+      },
+      {
+        experience: await queryDB(
+          `SELECT * FROM Experience WHERE employee_id = ${empId};`,
+          [],
+        ),
+      },
+      {
+        salary: await queryDB(
+          `SELECT * FROM Salary WHERE employee_id = ${empId};`,
+          [],
+        ),
+      },
+    ]);
+
+    res.status(200).send(results.flat());
+    // res.status(200).send("succes");
+  } catch (error) {
+    console.error("Error fetching employee data:", error);
+    res.status(500).send("Error fetching employee data");
+  }
+};
+const oneEmp = (req, res) => {
+  const { empId } = req.body;
+  console.log(empId);
+
+  queryDB(`${query} WHERE employee_id=${empId};`, [])
+    .then((result) => {
+      return res.status(200).send(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).send({ error: "Database query failed" });
+    });
+};
+const attendance = (req, res) => {
+  const { empId, days_worked, total_working_days, attendance_percentage } =
+    req.body;
+  // console.log(req.body);
+  const query = `INSERT INTO Attendance (emp_id, admin_id, days_worked, total_working_days, attendance_percentage)
+VALUES (${empId}, NULL, ${days_worked}, ${total_working_days}, ${attendance_percentage})`;
+  queryDB(query, [])
+    .then((result) => {
+      res.status(200).send("ok");
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).send({ error: "Database query failed" });
+    });
+};
+const fetchAttendance = (req, res) => {
+  const { empId } = req.body;
+  // console.log(req.body);
+  const query = `SELECT * FROM Attendance WHERE emp_id=${empId}`;
+  queryDB(query, [])
+    .then((result) => {
+      return res.status(200).send(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).send({ error: "Database query failed" });
+    });
+};
+const salary = (req, res) => {
+  const { empId, basic_pay, allowance, bonus, total_salary } = req.body;
+  const query = `INSERT INTO Salary (employee_id, admin_id, basic_pay, allowance, bonus, total_salary)
+VALUES (${empId}, NULL, ${basic_pay}, ${allowance}, ${bonus}, ${total_salary})`;
+  queryDB(query, [])
+    .then((result) => {
+      res.status(200).send("ok");
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).send({ error: "Database query failed" });
+    });
+};
+const fetchSalary = (req, res) => {
+  const { empId } = req.body;
+  // console.log(req.body);
+  const query = `SELECT * FROM Salary WHERE employee_id=${empId};`;
+  queryDB(query, [])
+    .then((result) => {
+      return res.status(200).send(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).send({ error: "Database query failed" });
+    });
+};
+const experience = (req, res) => {
+  const { empId, previous_company, start_date, end_date, years_of_experience } =
+    req.body;
+
+  const query = `INSERT INTO Experience (employee_id, admin_id, previous_company, start_date, end_date, years_of_experience)
+VALUES (${empId}, NULL, '${previous_company}', '${start_date}', '${end_date}', '${years_of_experience}');`;
+  queryDB(query, [])
+    .then((result) => {
+      res.status(200).send("ok");
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).send({ error: "Database query failed" });
+    });
+};
+const fetchExperience = (req, res) => {
+  const { empId } = req.body;
+  const query = `SELECT * FROM Experience WHERE employee_id=${empId}`;
+  queryDB(query, [])
+    .then((result) => {
+      return res.status(200).send(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).send({ error: "Database query failed" });
+    });
 };
 
-const logoutCurrentUser = (req, res) => {
-  res.cookie("jwt", "", {
-    httyOnly: true,
-    expires: new Date(0),
-  });
-  res.status(200).json({ message: "Logged out successfully" });
+module.exports = {
+  empBaseDetails,
+  addEmp,
+  empAllDetails,
+  oneEmp,
+  removeEmp,
+  editEmp,
+  attendance,
+  fetchAttendance,
+  salary,
+  fetchSalary,
+  experience,
+  fetchExperience,
 };
-
-const getCurrentUserProfile = (req, res) => {
-  const { username, password } = req.body.userCredential;
-  const loginTableQuery = `SELECT * FROM EmployeeLogin WHERE employee_username="${username}" AND employee_password="${password}";`;
-
-  queryDB(loginTableQuery, []).then((result) => {
-    if (result.length > 0) {
-      return res.status(201).json({
-        id: result[0].employee_id,
-        userName: result[0].employee_username,
-      });
-    }
-  });
-  res.status(404).send("User not found");
-};
-
-module.exports = { createUser, loginUser };

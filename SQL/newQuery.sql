@@ -14,7 +14,7 @@ CREATE TABLE Admin (
     admin_name VARCHAR(100),
     admin_username VARCHAR(100),
     admin_password VARCHAR(100),
-    FOREIGN KEY (employee_id) REFERENCES EmployeeDetails(Id) ON DELETE CASCADE
+    -- FOREIGN KEY (employee_id) REFERENCES EmployeeDetails(Id) ON DELETE CASCADE
 );
 
 -- EmployeeLogin Table

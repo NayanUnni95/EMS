@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Outlet, useNavigate } from "react-router-dom";
 import { instance as axios } from "../../axios/configuration";
 import { Emp_All_Data, Remove_emp } from "../../constant/constant";
 import { ToastContainer, toast } from "react-toastify";
-import { DataContext } from "../../context/LoginCache";
 import MenAvatar from "../../assets/men.png";
 import WomenAvatar from "../../assets/women.png";
 
@@ -14,8 +13,6 @@ function Employee() {
   const [experience, setExperience] = useState();
   const { empId } = useParams();
   const navigate = useNavigate();
-  const { userData, setUserData } = useContext(DataContext);
-
   const tokenPermission = {
     withCredentials: true,
   };
@@ -34,39 +31,36 @@ function Employee() {
   const warning = (msg) => toast.warn(msg, toastObj);
 
   useEffect(() => {
-    console.log(empId);
-
     axios
       .post(Emp_All_Data, { empId }, tokenPermission)
       .then((result) => {
-        console.log(result);
         // console.log(result.data[0].employee_name);
         setData(result);
       })
       .catch((error) => {
         console.log(error);
       });
-    // axios
-    //   .post("/user/emp-attendance", { empId }, tokenPermission)
-    //   .then((result) => {
-    //     console.log(result.data);
-    //     setAttendance(result.data[0]);
-    //   })
-    //   .catch((error) => console.log(error));
-    // axios
-    //   .post("/user/emp-salary", { empId }, tokenPermission)
-    //   .then((result) => {
-    //     console.log(result.data);
-    //     setSalary(result.data[0]);
-    //   })
-    //   .catch((error) => console.log(error));
-    // axios
-    //   .post("/user/emp-experience", { empId }, tokenPermission)
-    //   .then((result) => {
-    //     console.log(result.data);
-    //     setExperience(result.data[0]);
-    //   })
-    //   .catch((error) => console.log(error));
+    axios
+      .post("/user/emp-attendance", { empId }, tokenPermission)
+      .then((result) => {
+        console.log(result.data);
+        setAttendance(result.data[0]);
+      })
+      .catch((error) => console.log(error));
+    axios
+      .post("/user/emp-salary", { empId }, tokenPermission)
+      .then((result) => {
+        console.log(result.data);
+        setSalary(result.data[0]);
+      })
+      .catch((error) => console.log(error));
+    axios
+      .post("/user/emp-experience", { empId }, tokenPermission)
+      .then((result) => {
+        console.log(result.data);
+        setExperience(result.data[0]);
+      })
+      .catch((error) => console.log(error));
   }, [empId]);
 
   const removeEmp = () => {

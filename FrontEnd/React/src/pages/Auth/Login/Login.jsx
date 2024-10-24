@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { instance as axios } from "../../../axios/configuration";
 import { ThreeDots } from "react-loader-spinner";
@@ -7,11 +7,16 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaUser } from "react-icons/fa6";
 import { IoMdLock } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { DataContext } from "../../../context/LoginCache";
 import styles from "./Login.module.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function SignIn() {
-  const [isAdmin, setIsAdmin] = useState(true);
+  const { isLogged, setIsLogged, isAdmin, setIsAdmin, userData, setUserData } =
+    useContext(DataContext);
+  console.log(isAdmin);
+
+  // const [isAdmin, setIsAdmin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -56,6 +61,9 @@ function SignIn() {
         }
       } else {
         success("Login Success");
+        console.log(response.data);
+        setUserData(response.data);
+        setIsLogged(true);
         navigate("/");
       }
     } catch (error) {
@@ -155,7 +163,7 @@ function SignIn() {
                     justifyContent: "center",
                     backgroundColor: "white",
                   }}
-                  disabled={isLoading}
+                  // disabled={isLoading}
                   onClick={(e) => {
                     e.preventDefault();
                     login(username, password);

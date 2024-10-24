@@ -1,23 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import { instance as axios } from "../../../axios/configuration";
 import { Employee_SignUp } from "../../../constant/constant";
 import { FaUser } from "react-icons/fa6";
 import { IoMdLock } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { DataContext } from "../../../context/LoginCache";
 import styles from "../Login/Login.module.css";
 
 function SignUp() {
-  // const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, seIsLoading] = useState(false);
-  // const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phoneNo, setPhoneNo] = useState();
-  // const [designation, setDesignation] = useState("");
+  const navigate = useNavigate();
+  const { isLogged, setIsLogged, isAdmin, setIsAdmin, userData, setUserData } =
+    useContext(DataContext);
 
   const toastObj = {
     position: "bottom-center",
@@ -32,41 +30,34 @@ function SignUp() {
   const info = (msg) => toast.info(msg, toastObj);
   const warning = (msg) => toast.warn(msg, toastObj);
 
-  const login = async (
-    name,
-    username,
-    password,
-    confirmPassword,
-    email,
-    phoneNo,
-    designation
-  ) => {
-    // if (password !== confirmPassword) {
-    //   console.log(password);
-    //   console.log(confirmPassword);
-    //   return warning("Two passwords are different :( ");
-    // }
+  const login = async (username, password) => {
     const payload = {
       method: "POST",
       url: Employee_SignUp,
       userCredential: {
-        // name,
         username,
         password,
-        // email,
-        // phoneNo,
-        // designation,
       },
       headers: {
         "Content-Type": "application/json",
       },
     };
-    console.log(payload);
 
     const response = await axios.post(Employee_SignUp, payload);
-    console.log(response);
-
-    // return response;
+    if (response.data.message) {
+      if (response.data.message === "Invalid credentials") {
+        info(response.data.message);
+      } else {
+        warning(response.data.message);
+      }
+    } else {
+      success("Sign up Success");
+      // console.log(response.data);
+      setUserData(response.data);
+      setIsLogged(true);
+      setIsAdmin(false);
+      navigate("/");
+    }
   };
 
   return (
@@ -74,7 +65,7 @@ function SignUp() {
       <div className={styles.innerSection}>
         <div className={styles.pageTitle}>
           <h1>welcome</h1>
-          <h4>sign up new account</h4>
+          <h4>Sign up new account</h4>
         </div>
         {/* <div className={styles.userTypeSection}>
           <div
@@ -141,7 +132,7 @@ function SignUp() {
               </div>
               <div className={styles.usernameSection}>
                 <div className={styles.icon}>
-                  <FaUser size={20} />
+                  <IoMdLock size={20} />
                 </div>
                 <div className={styles.usernameInnerSection}>
                   <input
@@ -222,7 +213,7 @@ function SignUp() {
                     login(
                       // name,
                       username,
-                      password
+                      password,
                       // confirmPassword
                       // email,
                       // phoneNo,

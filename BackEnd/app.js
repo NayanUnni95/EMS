@@ -2,14 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const cookieParser = require("cookie-parser");
-const { dashboard, oneEmp, addEmp, allEmp } = require("./routes/employee");
-const { attDetails } = require("./routes/attendance");
-const { expData } = require("./routes/experience");
-const { salaryDetails } = require("./routes/salary");
-// const { adminValidate } = require("./routes/adminLogin");
-const { empLogin, empSignup } = require("./routes/empAuth");
-const { createUser, loginUser } = require("./controllers/userController");
-const { loginAdmin, logoutAdmin } = require("./controllers/adminController");
+const { adminRouter } = require("./routes/admin");
+const { empRouter } = require("./routes/employee");
+const { userRouter } = require("./routes/user");
 require("dotenv").config();
 
 const port = process.env.port;
@@ -19,24 +14,16 @@ const corsOpts = {
   allowedHeaders: ["Content-Type"],
   credentials: true,
 };
+const router = express.Router();
 
 app.use(cors(corsOpts));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get("/", (req, res) => res.status(200).send("EMS..."));
-app.get("/api/employees", dashboard);
-app.get("/api/employee-all-details/:empId", allEmp);
-app.get("/api/employee-details/:empId", oneEmp);
-app.post("/api/add-employee", addEmp);
-app.get("/api/attendance/:empId", attDetails);
-app.get("/api/salary/:empId", salaryDetails);
-app.get("/api/experience/:empId", expData);
-app.post("/api/admin/login", loginAdmin);
-// app.post("/api/emp/login", empLogin);
-app.post("/api/emp/login", loginUser);
-app.post("/api/emp/signup", createUser);
+app.use("/api/admin", adminRouter);
+app.use("/api/emp", empRouter);
+app.use("/api/user", userRouter);
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}/`);
